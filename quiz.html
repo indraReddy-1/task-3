@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cricket Quiz</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Cricket Quiz</h1>
+    <p id="question"></p>
+    <div id="options" class="options"></div>
+    <button onclick="nextQuestion()">Next</button>
+    <p id="score">Score: <span id="score-value">0</span></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<link rel="stylesheet" href="style.css">
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.quiz-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.options button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+</style>
+<script>
+    const quizData = [
+  {
+    question: "What does LBW stand for in cricket?",
+    options: ["Leg Before Wicket", "Long Boundary Width", "Lateral Ball Wicket", "Leg Bale Wrist"],
+    answer: 0
+  },
+  {
+    question: "How many players are there in a cricket team?",
+    options: ["9", "11", "10", "12"],
+    answer: 1
+  },
+  {
+    question: "What is the highest individual score in Test cricket?",
+    options: ["400", "401", "502", "400 not out"],
+    answer: 0
+  },
+  {
+    question: "Which country has won the most Cricket World Cups?",
+    options: ["India", "Australia", "England", "West Indies"],
+    answer: 1
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionElem = document.getElementById('question');
+const optionsElem = document.getElementById('options');
+const scoreElem = document.getElementById('score-value');
+
+function loadQuestion() {
+  const currentQuizData = quizData[currentQuestion];
+  questionElem.innerText = currentQuizData.question;
+
+  optionsElem.innerHTML = '';
+
+  currentQuizData.options.forEach((option, index) => {
+    const button = document.createElement('button');
+    button.innerText = option;
+    button.addEventListener('click', () => checkAnswer(index));
+    optionsElem.appendChild(button);
+  });
+}
+
+function checkAnswer(index) {
+  if (index === quizData[currentQuestion].answer) {
+    score++;
+    scoreElem.innerText = score;
+  }
+
+  if (currentQuestion < quizData.length - 1) {
+    currentQuestion++;
+    loadQuestion();
+  } else {
+    alert('Quiz complete! Your final score is ' + score);
+  }
+}
+
+function nextQuestion() {
+  if (currentQuestion < quizData.length - 1) {
+    currentQuestion++;
+    loadQuestion();
+  } else {
+    alert('Quiz complete! Your final score is ' + score);
+  }
+}
+
+loadQuestion();
+
+</script>
